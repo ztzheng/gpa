@@ -15,16 +15,18 @@ TEMPLATE = app
 SOURCES += main.cpp\
         qgpa.cpp \
     checkcodedlg.cpp \
-    session.cpp
+    session.cpp \
+    queryresult.cpp
 
 HEADERS  += qgpa.h \
     checkcodedlg.h \
     local.h \
     session.h \
-    ui_checkcodedlg.h
+    queryresult.h
 
 FORMS    += qgpa.ui \
-    checkcodedlg.ui
+    checkcodedlg.ui \
+    queryresult.ui
 
 RESOURCES += \
     qgpa.qrc

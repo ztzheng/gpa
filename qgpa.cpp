@@ -4,6 +4,7 @@
 #include <QMessageBox>
 #include <QDebug>
 #include "session.h"
+#include "queryresult.h"
 
 QGpa::QGpa(QWidget *parent) :
     QWidget(parent),
@@ -68,8 +69,10 @@ void QGpa::on_btnQuery_clicked()
         return;
     }
 
+    // 查询成功
     QList<QStringList> list=session.query(ui->comboBox->currentText(),ui->comboBox_2->currentText());
-    qDebug()<<list;
-
+    QueryResult *result=new QueryResult(this,list);
+    this->hide();
+    result->show();
     ui->btnQuery->setEnabled(true);
 }

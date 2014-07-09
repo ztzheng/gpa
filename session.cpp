@@ -24,7 +24,6 @@ bool Session::preLogin()
     QString redirect=pReply->attribute(QNetworkRequest::RedirectionTargetAttribute).toString();
     delete pReply;
     if(!redirect.contains("efault2")) return false;
-
     request.setUrl(QUrl("http://"+m_host+redirect));
     pReply=manager.get(request);
     loop.exec();
