@@ -5,6 +5,9 @@
 #include <QDebug>
 #include "session.h"
 #include "queryresult.h"
+#include <QSettings>
+#include <QTextCodec>
+#include "encrypt.h"
 
 QGpa::QGpa(QWidget *parent) :
     QWidget(parent),
@@ -25,6 +28,7 @@ QGpa::QGpa(QWidget *parent) :
         ui->comboBox->addItem(years);
     }
     ui->comboBox->setCurrentIndex(ui->comboBox->count()-1);
+    load();
 }
 
 QGpa::~QGpa()
@@ -34,6 +38,8 @@ QGpa::~QGpa()
 
 void QGpa::on_btnQuery_clicked()
 {
+    if(ui->checkBox->isChecked())
+        save();
     ui->btnQuery->setEnabled(false);
     if(ui->editUrl->text().isEmpty())
     {
@@ -76,3 +82,37 @@ void QGpa::on_btnQuery_clicked()
     result->show();
     ui->btnQuery->setEnabled(true);
 }
+
+
+void QGpa::save()
+{
+    QString account=ui->editId->text();
+    QString password=ui->editPass->text();
+
+    char cipher[MAX_LEN],plain[MAX_LEN];
+    strcpy(plain,password.toLatin1().data());
+    encrypt(plain,cipher);
+    password=QString(cipher);
+
+    QSettings config("data.ini", QSettings::IniFormat);
+    config.setIniCodec(QTextCodec::codecForName("utf-8"));
+    config.setValue("/account",account);
+    config.setValue("/password",password);
+}
+
+void QGpa::load()
+{
+    QSettings config("data.ini", QSettings::IniFormat);
+    config.setIniCodec(QTextCodec::codecForName("utf-8"));
+    QString account=config.value("/account").toString();
+    QString password=config.value("/password").toString();
+
+    char cipher[MAX_LEN],plain[MAX_LEN];
+    strcpy(cipher,password.toLatin1().data());
+    decrypt(cipher,  plain);
+    password=QString(plain);
+    ui->editId->setText(account);
+    ui->editPass->setText(password);
+
+}
+

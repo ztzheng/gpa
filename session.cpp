@@ -1,10 +1,10 @@
 #include "session.h"
 #include <QDebug>
-#include "local.h"
 #include <QRegExp>
 #include <QUrl>
 #include <QMessageBox>
 #include "checkcodedlg.h"
+#include <QTextCodec>
 
 Session::Session(QString host, QString id, QString pass)
 {
@@ -30,7 +30,7 @@ bool Session::preLogin()
     QString html=QString::fromLocal8Bit(pReply->readAll());
     delete pReply;
 
-    if(!html.toLocal().contains("用户名"))	 return false;
+    if(!html.contains(tr("用户名")))	 return false;
     m_viewState=getViewState(html);
 
     if(m_viewState.isEmpty())    return false;
@@ -61,13 +61,13 @@ Session::ErrorType Session::createLogin()
     QString codeName=rx.cap(1).replace("<input name=\"","").replace("\"","");
 
     //Login
-    QByteArray data=QString("__VIEWSTATE="+m_viewState+"&"+idNmae+"="+m_id+"&"+passName+"="+m_pass+"&"+codeName+"="+m_checkCode+"&RadioButtonList1=%D1%A7%C9%FA&Button1=&lbLanguage=").toAscii();
+    QByteArray data=QString("__VIEWSTATE="+m_viewState+"&"+idNmae+"="+m_id+"&"+passName+"="+m_pass+"&"+codeName+"="+m_checkCode+"&RadioButtonList1=%D1%A7%C9%FA&Button1=&lbLanguage=").toLatin1();
     pReply=manager.post(request,data);
     loop.exec();
     html=QString::fromLocal8Bit( pReply->readAll().data());
-    if(html.contains(QString::fromLocal("验证码不正确")))        return CheckCodeError;
-    if(html.contains(QString::fromLocal("用户名不存在")))        return NoUserError;
-    if(html.contains(QString::fromLocal("密码错误")))        return PasswordError;
+    if(html.contains(tr("验证码不正确")))        return CheckCodeError;
+    if(html.contains(tr("用户名不存在")))        return NoUserError;
+    if(html.contains(tr("密码错误")))        return PasswordError;
     if(!html.contains("xs_main.aspx?xh"))	       return OtherError;
     QString redirect=pReply->attribute(QNetworkRequest::RedirectionTargetAttribute).toString();
     delete pReply;
@@ -126,24 +126,24 @@ QString Session::getName(QString html)
 
 QList<QStringList> Session::query(QString years, QString term)
 {
-    QUrl url=QUrl::fromEncoded(term.toAscii());
+    QUrl url=QUrl::fromEncoded(term.toLatin1());
     term=QString(encodeURI(url.toString()));
     if(!years.contains("20"))
     {
-        url=QUrl::fromEncoded(years.toAscii());
+        url=QUrl::fromEncoded(years.toLatin1());
         years=QString(encodeURI(url.toString()));
     }
 
     request.setUrl(QUrl("http://"+m_host+"/("+m_tagCode+")/xscjcx_dq.aspx?xh="+m_id+"&xm="+m_name+"&gnmkdm=N121605"));
     QString refer="http://"+m_host+"/("+m_tagCode+")/xs_main.aspx?xh="+m_id;
-    request.setRawHeader("Referer",refer.toAscii());
+    request.setRawHeader("Referer",refer.toLatin1());
     pReply=manager.get(request);
     loop.exec();
     QString html=pReply->readAll();
     delete pReply;
 
     QString viewState=getViewState(html);
-    QByteArray data=QString("__EVENTTARGET=&__EVENTARGUMENT=&__VIEWSTATE="+viewState+"&ddlxn="+years+"&ddlxq="+term+"&btnCx=+%B2%E9++%D1%AF+ ").toAscii();
+    QByteArray data=QString("__EVENTTARGET=&__EVENTARGUMENT=&__VIEWSTATE="+viewState+"&ddlxn="+years+"&ddlxq="+term+"&btnCx=+%B2%E9++%D1%AF+ ").toLatin1();
     pReply=manager.post(request,data);
     loop.exec();
     html=QString::fromLocal8Bit(pReply->readAll());

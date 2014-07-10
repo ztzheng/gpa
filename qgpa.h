@@ -20,6 +20,8 @@ private slots:
 
 private:
     Ui::QGpa *ui;
+    void save();
+    void load();
 };
 
 #endif // QGPA_H

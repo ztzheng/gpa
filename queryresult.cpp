@@ -12,33 +12,43 @@ QueryResult::QueryResult(QWidget *parent,QList<QStringList> list) :
     ui->tableWidget->setRowCount(list.length());
     ui->tableWidget->setColumnCount(16);
     QTableWidgetItem* item;
-    float sGpa=0;          //总绩点
-    float sScore=0;       //总学分
-    bool ok=true;
-    QStringList exclude;
+
     for(int i=0;i<list.length();i++)
     {
         for(int j=0;j<16;j++)
         {
             ui->tableWidget->setItem(i,j,new QTableWidgetItem(list.at(i).at(j)));
             item=ui->tableWidget->item(i ,j);
-            item->setBackgroundColor(Qt::white);
             item->setFlags(item->flags()&(~Qt::ItemIsEditable));
         }
     }
-    for(int i=0;i<list.length();i++)
+    ui->tableWidget->resizeColumnsToContents();
+    setFixedSize(width(),height());
+    this->calculate();
+    connect(ui->reCal,SIGNAL(clicked()),this,SLOT(calculate()));
+}
+
+
+void QueryResult::calculate()
+{
+    float sGpa=0;          //总绩点
+    float sScore=0;       //总学分
+    bool ok=true;
+    QStringList exclude;
+    QTableWidgetItem* item;
+    for(int i=0;i<ui->tableWidget->rowCount();i++)
     {
         for(int j=0;j<16;j++)
         {
             if(j==6)
             {
-                float score=list.at(i).at(6).toFloat();     //学分
-                float gpa=getGpa(list.at(i).at(11).toFloat(&ok));       //绩点
+                float score=ui->tableWidget->item(i,6)->text().toFloat();     //学分
+                float gpa=getGpa(ui->tableWidget->item(i,11)->text().toFloat(&ok));       //绩点
                 if(!ok){
-                    item=ui->tableWidget->item(i ,11);
-                    item->setBackgroundColor(Qt::red);
-                    item->setFlags(item->flags()&(Qt::ItemIsEditable));
-                    exclude<<list.at(i).at(3);
+                    item=ui->tableWidget->item(i,11);
+                    item->setFlags(item->flags()|Qt::ItemIsEditable);
+                    item->setBackgroundColor(QColor(qRgb(0,255,255)));
+                    exclude<<ui->tableWidget->item(i,3)->text();
                     continue;
                 }
                 sScore+=score;
@@ -46,10 +56,8 @@ QueryResult::QueryResult(QWidget *parent,QList<QStringList> list) :
             }
         }
     }
-    ui->tableWidget->horizontalHeader()->setResizeMode(QHeaderView::Fixed);
-    ui->tableWidget->resizeColumnsToContents();
-    setFixedSize(width(),height());
-    QString str=ui->label->text();
+
+    QString str=tr("平均绩点：");
     QString point;
     point.sprintf("%.4f",sGpa/sScore);
     str.append(point+"\t");
@@ -58,7 +66,7 @@ QueryResult::QueryResult(QWidget *parent,QList<QStringList> list) :
     foreach (QString tmp, exclude) {
         str2=str2+tmp+" ";
     }
-    str.append(trUtf8("未加入计算科目：")+str2);
+    str.append(tr("未加入计算科目：")+str2);
     ui->label->setText(str);
 }
 
@@ -70,6 +78,7 @@ void QueryResult::closeEvent(QCloseEvent *)
 
 QueryResult::~QueryResult()
 {
+    ui->tableWidget->clearContents();
     delete ui;
 }
 
@@ -82,7 +91,9 @@ void QueryResult::on_pushButton_clicked()
 float QueryResult::getGpa(float a)
 {
     if(a<60)
-        return 0;
+        return 1;
     a=a-50;
     return a/10;
 }
+
+

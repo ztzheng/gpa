@@ -20,9 +20,9 @@ SOURCES += main.cpp\
 
 HEADERS  += qgpa.h \
     checkcodedlg.h \
-    local.h \
     session.h \
-    queryresult.h
+    queryresult.h \
+    encrypt.h
 
 FORMS    += qgpa.ui \
     checkcodedlg.ui \
@@ -30,3 +30,8 @@ FORMS    += qgpa.ui \
 
 RESOURCES += \
     qgpa.qrc
+
+RC_FILE += qgpa.rc
+
+OTHER_FILES += \
+    qgpa.rc

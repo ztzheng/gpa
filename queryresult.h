@@ -20,11 +20,13 @@ public:
     
 private slots:
     void on_pushButton_clicked();
+    void calculate();
 
 private:
     Ui::QueryResult *ui;
     QWidget *parent;
     float getGpa(float a);
+
 };
 
 #endif // QUERYRESULT_H

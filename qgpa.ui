@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>660</width>
+    <width>580</width>
     <height>448</height>
    </rect>
   </property>
@@ -16,7 +16,11 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>QGpa</string>
+   <string>绩点计算器</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="qgpa.qrc">
+    <normaloff>:/ico.ico</normaloff>:/ico.ico</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="3" column="0">
@@ -92,7 +96,7 @@
            </font>
           </property>
           <property name="text">
-           <string>11251104139</string>
+           <string/>
           </property>
          </widget>
         </item>
@@ -129,7 +133,7 @@
            </font>
           </property>
           <property name="text">
-           <string>456491</string>
+           <string/>
           </property>
           <property name="echoMode">
            <enum>QLineEdit::Password</enum>
@@ -161,6 +165,9 @@
           <property name="text">
            <string>记住密码</string>
           </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
          </widget>
         </item>
        </layout>
@@ -173,6 +180,19 @@
      <property name="title">
       <string>声明</string>
      </property>
+     <widget class="QLabel" name="checkcode">
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>30</y>
+        <width>111</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
     </widget>
    </item>
    <item row="2" column="0" colspan="4">
@@ -328,7 +348,9 @@
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="qgpa.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>pushButton</sender>

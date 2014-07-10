@@ -1,5 +1,6 @@
 #include "checkcodedlg.h"
 #include "ui_checkcodedlg.h"
+#include <QDebug>
 
 CheckCodeDlg::CheckCodeDlg(QWidget *parent,Session* session)
     : QDialog(parent),ui(new Ui::CheckCodeDlg)
@@ -7,9 +8,10 @@ CheckCodeDlg::CheckCodeDlg(QWidget *parent,Session* session)
     ui->setupUi(this);
     this->session=session;
     QObject::connect(this,SIGNAL(finishedCode(QString)),session,SLOT(setCheckCode(QString)));
+    setFixedSize(width(),height());
+    ui->lineEdit->setFocus();
     QPixmap* pixmap=session->getCheckCode();
     ui->label->setPixmap(*pixmap);
-    setFixedSize(width(),height());
 }
 
 CheckCodeDlg::~CheckCodeDlg()

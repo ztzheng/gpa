@@ -14,7 +14,7 @@
    <string>查询结果</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="qgpa.qrc">
     <normaloff>:/ico.ico</normaloff>:/ico.ico</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
@@ -29,21 +29,24 @@
         </size>
        </property>
        <property name="text">
-        <string>平均绩点：</string>
+        <string/>
        </property>
       </widget>
      </item>
-     <item row="1" column="2">
+     <item row="1" column="3">
       <widget class="QPushButton" name="pushButton">
        <property name="text">
         <string>确定</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="0" colspan="3">
+     <item row="0" column="0" colspan="4">
       <widget class="QTableWidget" name="tableWidget">
        <property name="enabled">
         <bool>true</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
        </property>
        <property name="editTriggers">
         <set>QAbstractItemView::AnyKeyPressed|QAbstractItemView::CurrentChanged|QAbstractItemView::EditKeyPressed</set>
@@ -143,10 +146,19 @@
        </property>
       </spacer>
      </item>
+     <item row="1" column="2">
+      <widget class="QPushButton" name="reCal">
+       <property name="text">
+        <string>重新计算</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="qgpa.qrc"/>
+ </resources>
  <connections/>
 </ui>
