@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>580</width>
-    <height>448</height>
+    <width>523</width>
+    <height>386</height>
    </rect>
   </property>
   <property name="font">
@@ -80,7 +80,7 @@
          <widget class="QLineEdit" name="editId">
           <property name="minimumSize">
            <size>
-            <width>250</width>
+            <width>220</width>
             <height>25</height>
            </size>
           </property>
@@ -180,19 +180,23 @@
      <property name="title">
       <string>声明</string>
      </property>
-     <widget class="QLabel" name="checkcode">
-      <property name="geometry">
-       <rect>
-        <x>60</x>
-        <y>30</y>
-        <width>111</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_6">
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;body&gt;&lt;p&gt;本软件由个人开发，欢迎二次开发，禁止用于商业用途！&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/ztzheng/gpa&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;软件源码&lt;/span&gt;&lt;/a&gt;  广东财经大学信息学院  &lt;a href=&quot;mailto:zhengzetong@tom.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;zhengzetong@tom.com&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignHCenter|Qt::AlignTop</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
    <item row="2" column="0" colspan="4">

@@ -2,6 +2,7 @@
 #define QGPA_H
 
 #include <QWidget>
+#include <QDesktopServices>
 
 namespace Ui {
 class QGpa;
@@ -17,6 +18,7 @@ public:
 
 private slots:
     void on_btnQuery_clicked();
+    void openUrl(QString url);
 
 private:
     Ui::QGpa *ui;

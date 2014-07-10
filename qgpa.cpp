@@ -28,6 +28,7 @@ QGpa::QGpa(QWidget *parent) :
         ui->comboBox->addItem(years);
     }
     ui->comboBox->setCurrentIndex(ui->comboBox->count()-1);
+    connect(ui->label_6,SIGNAL(linkActivated(QString)),this,SLOT(openUrl(QString)));
     load();
 }
 
@@ -81,6 +82,11 @@ void QGpa::on_btnQuery_clicked()
     this->hide();
     result->show();
     ui->btnQuery->setEnabled(true);
+}
+
+void QGpa::openUrl(QString url)
+{
+    QDesktopServices::openUrl(QUrl(url));
 }
 
 
