@@ -9,9 +9,11 @@ CheckCodeDlg::CheckCodeDlg(QWidget *parent,Session* session)
     this->session=session;
     QObject::connect(this,SIGNAL(finishedCode(QString)),session,SLOT(setCheckCode(QString)));
     setFixedSize(width(),height());
-    ui->lineEdit->setFocus();
+//
     QPixmap* pixmap=session->getCheckCode();
+    pixmap->save("checkcode.jpg");
     ui->label->setPixmap(*pixmap);
+    ui->lineEdit->setFocus();
 }
 
 CheckCodeDlg::~CheckCodeDlg()

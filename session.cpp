@@ -31,7 +31,8 @@ bool Session::preLogin()
     delete pReply;
 
     if(!html.contains(tr("用户名")))	 return false;
-    m_viewState=getViewState(html);
+//    m_viewState=getViewState(html);
+    m_viewState=getArgu("VIEWSTATE",html);
 
     if(m_viewState.isEmpty())    return false;
     m_tagCode=redirect.replace("/(","").replace(")/Default2.aspx","").replace(")/default2.aspx","");
@@ -60,23 +61,27 @@ Session::ErrorType Session::createLogin()
     pos=rx.indexIn(html,pos+1);
     QString codeName=rx.cap(1).replace("<input name=\"","").replace("\"","");
 
-    //Login
-    QByteArray data=QString("__VIEWSTATE="+m_viewState+"&"+idNmae+"="+m_id+"&"+passName+"="+m_pass+"&"+codeName+"="+m_checkCode+"&RadioButtonList1=%D1%A7%C9%FA&Button1=&lbLanguage=").toLatin1();
+//    Login
+    QString eventvalidation=getArgu("EVENTVALIDATION",html);
+    QByteArray data=QString("__VIEWSTATE="+m_viewState+
+                            "&__EVENTVALIDATION="+eventvalidation+"&"
+                            +idNmae+"="+m_id+"&"+passName+"="+m_pass+"&"+codeName+"="+m_checkCode+"&RadioButtonList1=%D1%A7%C9%FA&Button1=").toLatin1();
+
+
     pReply=manager.post(request,data);
     loop.exec();
     html=QString::fromLocal8Bit( pReply->readAll().data());
     if(html.contains(tr("验证码不正确")))        return CheckCodeError;
     if(html.contains(tr("用户名不存在")))        return NoUserError;
     if(html.contains(tr("密码错误")))        return PasswordError;
-    if(!html.contains("xs_main.aspx?xh"))	       return OtherError;
     QString redirect=pReply->attribute(QNetworkRequest::RedirectionTargetAttribute).toString();
+    if(!redirect.contains("xs_main.aspx?xh"))	       return OtherError;
     delete pReply;
     request.setUrl(QUrl("http://"+m_host+redirect));
     pReply=manager.get(request);
     loop.exec();
-    html=QString::fromLocal8Bit(pReply->readAll());
+    html=QString::fromLocal8Bit(pReply->readAll());  
     delete pReply;
-
     //获取姓名
     if(!html.contains("xhxm")) return OtherError;
     m_name=getName(html);
@@ -93,6 +98,14 @@ QString Session::getViewState(QString html)
     QRegExp rx("(VIEWSTATE\"\\s*value=\"\\S*\"\\s*/>)");
     rx.indexIn(html);
     QString tmp=rx.cap(1).replace("VIEWSTATE\" value=\"","").replace("\" />","");
+    return encodeURI(tmp);
+}
+
+QString Session::getArgu(QString argu,QString html)
+{
+    QRegExp rx("("+argu+"\"\\s*value=\"\\S*\"\\s*/>)");
+    rx.indexIn(html);
+    QString tmp=rx.cap(1).replace(argu+"\" value=\"","").replace("\" />","");
     return encodeURI(tmp);
 }
 
@@ -126,12 +139,15 @@ QString Session::getName(QString html)
 
 QList<QStringList> Session::query(QString years, QString term)
 {
-    QUrl url=QUrl::fromEncoded(term.toLatin1());
-    term=QString(encodeURI(url.toString()));
+//    QUrl url=QUrl::fromEncoded(term.toLatin1());
+//    term=QString(encodeURI(url.toString()));
+    QTextCodec *gbk = QTextCodec::codecForName("gbk");
+    term = gbk->fromUnicode(term).toPercentEncoding();
     if(!years.contains("20"))
     {
-        url=QUrl::fromEncoded(years.toLatin1());
-        years=QString(encodeURI(url.toString()));
+//        url=QUrl::fromEncoded(years.toLatin1());
+//        years=QString(encodeURI(url.toString()));
+        years=gbk->fromUnicode(years).toPercentEncoding();
     }
 
     request.setUrl(QUrl("http://"+m_host+"/("+m_tagCode+")/xscjcx_dq.aspx?xh="+m_id+"&xm="+m_name+"&gnmkdm=N121605"));
@@ -140,28 +156,31 @@ QList<QStringList> Session::query(QString years, QString term)
     pReply=manager.get(request);
     loop.exec();
     QString html=pReply->readAll();
+
     delete pReply;
 
-    QString viewState=getViewState(html);
-    QByteArray data=QString("__EVENTTARGET=&__EVENTARGUMENT=&__VIEWSTATE="+viewState+"&ddlxn="+years+"&ddlxq="+term+"&btnCx=+%B2%E9++%D1%AF+ ").toLatin1();
+    QString viewState=getArgu("VIEWSTATE",html);
+    QString eventvalidation=getArgu("EVENTVALIDATION",html);
+    QByteArray data=QString("__EVENTTARGET=&__EVENTARGUMENT=&__LASTFOCUS=&__VIEWSTATE="+viewState+"&__EVENTVALIDATION="+eventvalidation+"&ddlxn="+years
+                            +"&ddlxq="+
+                            term+"&btnCx=+%B2%E9++%D1%AF+").toLatin1();
     pReply=manager.post(request,data);
     loop.exec();
     html=QString::fromLocal8Bit(pReply->readAll());
     delete pReply;
-
     QList<QStringList> list=getScore(html);
     return list;
 }
 
 QPixmap *Session::getCheckCode()
 {
-    request.setUrl(QUrl("http://"+m_host+"/("+m_tagCode+")/checkcode.aspx"));
+    request.setUrl(QUrl("http://"+m_host+"/("+m_tagCode+")/CheckCode.aspx"));
     pReply=manager.get(request);
     loop.exec();
     QByteArray data=pReply->readAll();
-    delete pReply;
     QPixmap *pixmap=new QPixmap;
     pixmap->loadFromData(data);
+    delete pReply;
     return pixmap;
 }
 

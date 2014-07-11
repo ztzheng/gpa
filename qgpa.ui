@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>523</width>
-    <height>386</height>
+    <height>367</height>
    </rect>
   </property>
   <property name="font">
@@ -51,6 +51,12 @@
    </item>
    <item row="1" column="0" colspan="4">
     <widget class="QGroupBox" name="groupBox_2">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>100</height>
+      </size>
+     </property>
      <property name="maximumSize">
       <size>
        <width>16777215</width>
@@ -189,7 +195,7 @@
          </font>
         </property>
         <property name="text">
-         <string>&lt;html&gt;&lt;body&gt;&lt;p&gt;本软件由个人开发，欢迎二次开发，禁止用于商业用途！&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/ztzheng/gpa&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;软件源码&lt;/span&gt;&lt;/a&gt;  广东财经大学信息学院  &lt;a href=&quot;mailto:zhengzetong@tom.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;zhengzetong@tom.com&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;body&gt;&lt;p&gt;本软件由个人开发，欢迎二次开发，禁止用于商业用途！&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/ztzheng/gpa&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;软件源码&lt;/span&gt;&lt;/a&gt; 广东财经大学信息学院  &lt;a href=&quot;mailto:zhengzetong@tom.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;zhengzetong@tom.com&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignHCenter|Qt::AlignTop</set>
@@ -324,12 +330,38 @@
        <widget class="QLineEdit" name="editUrl">
         <property name="minimumSize">
          <size>
-          <width>300</width>
+          <width>0</width>
           <height>30</height>
          </size>
         </property>
         <property name="text">
-         <string>jwxt.gdufe.edu.cn</string>
+         <string>jwxt2.gdufe.edu.cn:8080</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnUrl1">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>入口1</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnUrl2">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>入口2</string>
         </property>
        </widget>
       </item>

@@ -20,6 +20,10 @@ private slots:
     void on_btnQuery_clicked();
     void openUrl(QString url);
 
+    void on_btnUrl1_clicked();
+
+    void on_btnUrl2_clicked();
+
 private:
     Ui::QGpa *ui;
     void save();

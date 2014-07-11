@@ -122,3 +122,13 @@ void QGpa::load()
 
 }
 
+
+void QGpa::on_btnUrl1_clicked()
+{
+    ui->editUrl->setText("jwxt.gdufe.edu.cn");
+}
+
+void QGpa::on_btnUrl2_clicked()
+{
+    ui->editUrl->setText("jwxt2.gdufe.edu.cn:8080");
+}
