@@ -1,5 +1,5 @@
 #include "queryresult.h"
-#include "ui_queryresult.h"
+#include "../ui_queryresult.h"
 #include <QDebug>
 
 QueryResult::QueryResult(QWidget *parent,QList<QStringList> list) :

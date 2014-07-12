@@ -1,4 +1,4 @@
-#include "qgpa.h"
+#include "classes/qgpa.h"
 #include <QApplication>
 #include <QTextCodec>
 #include <QStyleFactory>

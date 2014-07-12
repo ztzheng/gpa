@@ -1,5 +1,5 @@
 #include "checkcodedlg.h"
-#include "ui_checkcodedlg.h"
+#include "../ui_checkcodedlg.h"
 #include <QDebug>
 
 CheckCodeDlg::CheckCodeDlg(QWidget *parent,Session* session)

@@ -31,7 +31,6 @@ bool Session::preLogin()
     delete pReply;
 
     if(!html.contains(tr("用户名")))	 return false;
-//    m_viewState=getViewState(html);
     m_viewState=getArgu("VIEWSTATE",html);
 
     if(m_viewState.isEmpty())    return false;

@@ -12,26 +12,27 @@ TARGET = QGpa
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
-        qgpa.cpp \
-    checkcodedlg.cpp \
-    session.cpp \
-    queryresult.cpp
+SOURCES += main.cpp \
+    classes/checkcodedlg.cpp \
+    classes/qgpa.cpp \
+    classes/queryresult.cpp \
+    classes/session.cpp
 
-HEADERS  += qgpa.h \
-    checkcodedlg.h \
-    session.h \
-    queryresult.h \
-    encrypt.h
+HEADERS  += \
+    encrypt.h \
+    classes/checkcodedlg.h \
+    classes/qgpa.h \
+    classes/queryresult.h \
+    classes/session.h
 
-FORMS    += qgpa.ui \
-    checkcodedlg.ui \
-    queryresult.ui
+FORMS    += \
+    ui/checkcodedlg.ui \
+    ui/qgpa.ui \
+    ui/queryresult.ui
 
 RESOURCES += \
     qgpa.qrc
 
 RC_FILE += qgpa.rc
 
-OTHER_FILES += \
-    qgpa.rc
+OTHER_FILES +=

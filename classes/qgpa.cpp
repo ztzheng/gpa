@@ -1,5 +1,5 @@
 #include "qgpa.h"
-#include "ui_qgpa.h"
+#include "../ui_qgpa.h"
 #include <QDate>
 #include <QMessageBox>
 #include <QDebug>
