@@ -14,7 +14,7 @@
    <string>查询结果</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="qgpa.qrc">
+   <iconset resource="../qgpa.qrc">
     <normaloff>:/ico.ico</normaloff>:/ico.ico</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
@@ -158,7 +158,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="qgpa.qrc"/>
+  <include location="../qgpa.qrc"/>
  </resources>
  <connections/>
 </ui>

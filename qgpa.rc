@@ -20,12 +20,12 @@ BEGIN
         BLOCK "080404b0"
         BEGIN
             VALUE "CompanyName", "Guangdong University of Finance & Economics"
-            VALUE "FileDescription", "绩点计算器"
+            VALUE "FileDescription", "绩点助手"
             VALUE "FileVersion", "1.0"
             VALUE "InternalName", "QGpa.exe"
             VALUE "LegalCopyright", "郑泽桐"
             VALUE "OriginalFilename", "QGpa.exe"
-            VALUE "ProductName", "绩点计算器"
+            VALUE "ProductName", "绩点助手"
             VALUE "ProductVersion", "1.0"
         END
     END

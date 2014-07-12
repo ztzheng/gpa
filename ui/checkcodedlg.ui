@@ -14,7 +14,7 @@
    <string>请输入验证码</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="qgpa.qrc">
+   <iconset resource="../qgpa.qrc">
     <normaloff>:/ico.ico</normaloff>:/ico.ico</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -69,7 +69,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="qgpa.qrc"/>
+  <include location="../qgpa.qrc"/>
  </resources>
  <connections/>
 </ui>

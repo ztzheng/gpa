@@ -39,8 +39,8 @@ QGpa::~QGpa()
 
 void QGpa::on_btnQuery_clicked()
 {
-    if(ui->checkBox->isChecked())
-        save();
+
+    save();
     ui->btnQuery->setEnabled(false);
     if(ui->editUrl->text().isEmpty())
     {
@@ -105,7 +105,10 @@ void QGpa::save()
     QSettings config("data.ini", QSettings::IniFormat);
     config.setIniCodec(QTextCodec::codecForName("utf-8"));
     config.setValue("/account",account);
-    config.setValue("/password",password);
+    if(ui->checkBox->isChecked())
+        config.setValue("/password",password);
+    else
+        config.setValue("/password","");
 }
 
 void QGpa::load()

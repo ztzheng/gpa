@@ -35,4 +35,5 @@ RESOURCES += \
 
 RC_FILE += qgpa.rc
 
-OTHER_FILES +=
+OTHER_FILES += \
+    qgpa.rc
