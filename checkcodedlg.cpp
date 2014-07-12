@@ -11,7 +11,6 @@ CheckCodeDlg::CheckCodeDlg(QWidget *parent,Session* session)
     setFixedSize(width(),height());
 //
     QPixmap* pixmap=session->getCheckCode();
-    pixmap->save("checkcode.jpg");
     ui->label->setPixmap(*pixmap);
     ui->lineEdit->setFocus();
 }

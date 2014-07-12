@@ -93,13 +93,13 @@ void Session::setCheckCode(QString code)
     m_checkCode=code;
 }
 
-QString Session::getViewState(QString html)
-{
-    QRegExp rx("(VIEWSTATE\"\\s*value=\"\\S*\"\\s*/>)");
-    rx.indexIn(html);
-    QString tmp=rx.cap(1).replace("VIEWSTATE\" value=\"","").replace("\" />","");
-    return encodeURI(tmp);
-}
+//QString Session::getViewState(QString html)
+//{
+//    QRegExp rx("(VIEWSTATE\"\\s*value=\"\\S*\"\\s*/>)");
+//    rx.indexIn(html);
+//    QString tmp=rx.cap(1).replace("VIEWSTATE\" value=\"","").replace("\" />","");
+//    return encodeURI(tmp);
+//}
 
 QString Session::getArgu(QString argu,QString html)
 {

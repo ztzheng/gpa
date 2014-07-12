@@ -34,7 +34,7 @@ private:
     QNetworkReply *pReply;
     QString m_tagCode;
     QString m_viewState;
-    QString getViewState(QString html);
+//    QString getViewState(QString html);
     QString getArgu(QString argu, QString html);
     QByteArray encodeURI(QString str);
     QString getName(QString html);
