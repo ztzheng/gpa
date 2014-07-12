@@ -18,6 +18,7 @@ public:
     explicit Session(QString m_host,QString m_id="",QString m_pass="");
     bool preLogin();
     ErrorType createLogin();
+    ErrorType tryLogin();
     QPixmap* getCheckCode();
     QList<QStringList> query(QString years,QString term);
 
@@ -27,7 +28,7 @@ public slots:
     void setCheckCode(QString code);
 
 private:
-    QString m_host,m_id,m_pass,m_checkCode,m_name;
+    QString m_host,m_id,m_pass,m_checkCode;
     QNetworkAccessManager manager;
     QEventLoop loop;
     QNetworkRequest request;
@@ -39,6 +40,8 @@ private:
     QByteArray encodeURI(QString str);
     QString getName(QString html);
     QList<QStringList> getScore(QString html);
+
+
 };
 
 #endif // SESSION_H
