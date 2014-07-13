@@ -110,6 +110,8 @@ void QueryResult::on_btnSave_clicked()
     QString filePath=QFileDialog::getSaveFileName(this,""
                                                   ,QDesktopServices::storageLocation(QDesktopServices::DesktopLocation)+"/"+id+" "+year+" "+term+".xls"
                                                   ,"*.xls");
+    if(filePath.isEmpty())
+        return;
     QStringList headers;
     int n=ui->tableWidget->columnCount();
     for(int i=0;i<n;i++)

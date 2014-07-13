@@ -29,6 +29,7 @@ QGpa::QGpa(QWidget *parent) :
     }
     ui->comboBox->setCurrentIndex(ui->comboBox->count()-1);
     connect(ui->label_6,SIGNAL(linkActivated(QString)),this,SLOT(openUrl(QString)));
+    ui->editId->setValidator(new QRegExpValidator(QRegExp("\\d{0,11}"),this));
     load();
 }
 
