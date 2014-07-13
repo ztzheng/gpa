@@ -39,7 +39,6 @@ QGpa::~QGpa()
 
 void QGpa::on_btnQuery_clicked()
 {
-
     save();
     ui->btnQuery->setEnabled(false);
     if(ui->editUrl->text().isEmpty())
@@ -80,7 +79,7 @@ void QGpa::on_btnQuery_clicked()
 
     // 查询成功
     QList<QStringList> list=session.query(ui->comboBox->currentText(),ui->comboBox_2->currentText());
-    QueryResult *result=new QueryResult(this,list);
+    QueryResult *result=new QueryResult(this,list,ui->comboBox->currentText(),ui->comboBox_2->currentText(),ui->editId->text());
     this->hide();
     result->show();
     ui->btnQuery->setEnabled(true);

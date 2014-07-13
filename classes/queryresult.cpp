@@ -1,13 +1,20 @@
 #include "queryresult.h"
 #include "../ui_queryresult.h"
 #include <QDebug>
+#include <QFileDialog>
+#include <QDesktopServices>
+#include "qodbcexcel.h"
+#include <QMessageBox>
 
-QueryResult::QueryResult(QWidget *parent,QList<QStringList> list) :
+QueryResult::QueryResult(QWidget *parent, QList<QStringList> list, QString year, QString term,QString id) :
 
     ui(new Ui::QueryResult)
 {
     this->parent=parent;
     ui->setupUi(this);
+    this->year=year;
+    this->term=term;
+    this->id=id;
     setWindowFlags(Qt::WindowMinimizeButtonHint);
     ui->tableWidget->setRowCount(list.length());
     ui->tableWidget->setColumnCount(16);
@@ -60,7 +67,7 @@ void QueryResult::calculate()
     QString str=tr("平均绩点：");
     QString point;
     point.sprintf("%.4f",sGpa/sScore);
-    str.append(point+"\t");
+    str.append(point+"   ");
 
     QString str2;
     foreach (QString tmp, exclude) {
@@ -97,3 +104,33 @@ float QueryResult::getGpa(float a)
 }
 
 
+
+void QueryResult::on_btnSave_clicked()
+{
+    QString filePath=QFileDialog::getSaveFileName(this,""
+                                                  ,QDesktopServices::storageLocation(QDesktopServices::DesktopLocation)+"/"+id+" "+year+" "+term+".xls"
+                                                  ,"*.xls");
+    QStringList headers;
+    int n=ui->tableWidget->columnCount();
+    for(int i=0;i<n;i++)
+    {
+        QTableWidgetItem *item=ui->tableWidget->horizontalHeaderItem(i);
+        headers<<item->text();
+    }
+    QList<QStringList> data;
+    QStringList slist;
+    for(int i=0;i<ui->tableWidget->rowCount();i++)
+    {
+        slist.clear();
+        for(int j=0;j<n;j++)
+        {
+            slist<<ui->tableWidget->item(i,j)->text();
+        }
+        data<<slist;
+    }
+    QString comment=ui->label->text();
+    if(QOdbcExcel::save(filePath,headers,data,comment))
+        QMessageBox::information(this,tr("提示"),tr("保存成功"));
+    else
+        QMessageBox::critical(this,tr("错误"),tr("保存失败！"));
+}
