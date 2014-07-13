@@ -107,11 +107,17 @@ float QueryResult::getGpa(float a)
 
 void QueryResult::on_btnSave_clicked()
 {
-    QString filePath=QFileDialog::getSaveFileName(this,""
-                                                  ,QDesktopServices::storageLocation(QDesktopServices::DesktopLocation)+"/"+id+" "+year+" "+term+".xls"
-                                                  ,"*.xls");
-    if(filePath.isEmpty())
+//    QString filePath=QFileDialog::getSaveFileName(this,""
+//                                                  ,QDesktopServices::storageLocation(QDesktopServices::DesktopLocation)+"/"+id+" "+year+" "+term+".xls"
+//                                                  ,"*.xls");
+    QFileDialog dlg;
+    dlg.setAcceptMode(QFileDialog::AcceptSave);
+    dlg.setDirectory(QDesktopServices::storageLocation(QDesktopServices::DesktopLocation));
+    dlg.setNameFilter("*.xls");
+    dlg.selectFile(id+" "+year+" "+term+".xls");
+    if(dlg.exec()!= QDialog::Accepted)
         return;
+    QString filePath=dlg.selectedFiles()[0];
     QStringList headers;
     int n=ui->tableWidget->columnCount();
     for(int i=0;i<n;i++)
