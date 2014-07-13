@@ -4,17 +4,20 @@
 QOdbcExcel::QOdbcExcel()
 {
 }
+QString QOdbcExcel::error;
 
 bool QOdbcExcel::save(QString filePath, QStringList headers, QList<QStringList> data,QString comment)
 {
-    bool result=true;
     QString sheetName = "Sheet1";
 
 //    qDebug()<<headers<<endl<<data<<endl<<comment;
 
     QSqlDatabase db = QSqlDatabase::addDatabase("QODBC","excelexport");
     if( !db.isValid())
+    {
+        error="数据库驱动异常";
         return false;   //! type error
+    }
 
     QString dsn = "DRIVER={Microsoft Excel Driver (*.xls)};"
             "DSN='';FIRSTROWHASNAMES=1;READONLY=FALSE;CREATE_DB=\""+filePath+"\";DBQ="+filePath;
@@ -22,7 +25,10 @@ bool QOdbcExcel::save(QString filePath, QStringList headers, QList<QStringList> 
 
     // open connection
     if( !db.open())
+    {
+        error="无法打开数据库";
         return false;  //! db error
+    }
 
     QSqlQuery query(db);
     QString sSql;
@@ -42,9 +48,8 @@ bool QOdbcExcel::save(QString filePath, QStringList headers, QList<QStringList> 
     state = query.prepare( sSql);
     if( !query.exec()) {
         QOdbcExcel::printError( query.lastError());
-        result=false;
         db.close();
-        return result;
+        return false;
     }
     foreach (QStringList slist, data) {
         insert(query,sheetName,slist);
@@ -62,12 +67,13 @@ bool QOdbcExcel::save(QString filePath, QStringList headers, QList<QStringList> 
     }
 
     db.close();
-    return result;
+    return true;
 }
 
 void QOdbcExcel::printError(QSqlError error)
 {
     QString sqlerr = error.text();
+    error=sqlerr;
     qDebug()<<sqlerr;
 }
 

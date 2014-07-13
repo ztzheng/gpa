@@ -131,6 +131,8 @@ void QueryResult::on_btnSave_clicked()
     QString comment=ui->label->text();
     if(QOdbcExcel::save(filePath,headers,data,comment))
         QMessageBox::information(this,tr("提示"),tr("保存成功"));
-    else
-        QMessageBox::critical(this,tr("错误"),tr("保存失败！"));
+    else{
+        QString msg="保存失败！\n\r"+QOdbcExcel::getError();
+        QMessageBox::critical(this,tr("错误"),tr(msg.toLatin1()));
+    }
 }
