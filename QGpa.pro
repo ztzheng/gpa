@@ -38,4 +38,5 @@ RESOURCES += \
 RC_FILE += qgpa.rc
 
 OTHER_FILES += \
-    qgpa.rc
+    qgpa.rc \
+    README.md
