@@ -62,18 +62,12 @@ void QGpa::on_btnQuery_clicked()
         ui->btnQuery->setEnabled(true);
         return;
     }
-    Session::ErrorType errorType=session.tryLogin();
-    if(errorType==Session::OtherError)
-        errorType=session.createLogin();
-    switch (errorType) {
-    case Session::CheckCodeError:QMessageBox::critical(this,tr("错误"),tr("验证码有误！"));break;
-    case Session::NoUserError:QMessageBox::critical(this,tr("错误"),tr("用户名不存在或未按照要求参加教学活动！！"));break;
-    case Session::PasswordError:QMessageBox::critical(this,tr("错误"),tr("密码错误！"));break;
-    case Session::OtherError:QMessageBox::critical(this,tr("错误"),tr("登陆失败！"));break;
-    default:break;
-    }
-    if(errorType!=Session::NoError)
+    bool login=session.login1();
+    if(login==false&&session.getError().isEmpty())
+        login=session.login2();
+    if(login!=true)
     {
+        QMessageBox::critical(this,tr("错误"),tr(session.getError().toLatin1()));
         ui->btnQuery->setEnabled(true);
         return;
     }

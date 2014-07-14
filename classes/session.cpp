@@ -39,44 +39,6 @@ bool Session::preLogin()
     return true;
 }
 
-Session::ErrorType Session::createLogin()
-{
-
-    CheckCodeDlg dlg(NULL,this);
-    dlg.exec();
-    //获取表单name
-    request.setUrl(QUrl("http://"+m_host+"/("+m_tagCode+")/default2.aspx"));
-    request.setHeader(QNetworkRequest::ContentTypeHeader,"application/x-www-form-urlencoded");
-    pReply=manager.get(request);
-    loop.exec();
-    QString html=QString::fromLocal8Bit(pReply->readAll());
-    delete pReply;
-    QRegExp rx("(<input name=\"\\S*\")");
-    rx.indexIn(html);
-    int pos=rx.indexIn(html,0);
-    QString idNmae=rx.cap(1).replace("<input name=\"","").replace("\"","");
-    pos=rx.indexIn(html,pos+1);
-    QString passName=rx.cap(1).replace("<input name=\"","").replace("\"","");
-    pos=rx.indexIn(html,pos+1);
-    QString codeName=rx.cap(1).replace("<input name=\"","").replace("\"","");
-
-    //    Login
-    QString eventvalidation=getArgu("EVENTVALIDATION",html);
-    QByteArray data=QString("__VIEWSTATE="+m_viewState+
-                            "&__EVENTVALIDATION="+eventvalidation+"&"
-                            +idNmae+"="+m_id+"&"+passName+"="+m_pass+"&"+codeName+"="+m_checkCode+"&RadioButtonList1=%D1%A7%C9%FA&Button1=").toLatin1();
-
-    pReply=manager.post(request,data);
-    loop.exec();
-    html=QString::fromLocal8Bit( pReply->readAll().data());
-    if(html.contains(tr("验证码不正确")))        return CheckCodeError;
-    if(html.contains(tr("用户名不存在")))        return NoUserError;
-    if(html.contains(tr("密码错误")))        return PasswordError;
-    QString redirect=pReply->attribute(QNetworkRequest::RedirectionTargetAttribute).toString();
-    if(!redirect.contains("aspx?xh"))	       return OtherError;
-    delete pReply;
-    return NoError;
-}
 
 void Session::setCheckCode(QString code)
 {
@@ -184,25 +146,38 @@ QList<QStringList> Session::getScore( QString html )
     return list;
 }
 
-Session::ErrorType Session::tryLogin()
+QStringList Session::getInputName(QString url)
 {
-    //viewstate;
     //获取表单name
-    request.setUrl(QUrl("http://"+m_host+"/("+m_tagCode+")/default_ysdx.aspx"));
+    QStringList names;
+    request.setUrl(QUrl(url));
     request.setHeader(QNetworkRequest::ContentTypeHeader,"application/x-www-form-urlencoded");
     pReply=manager.get(request);
     loop.exec();
-    QString html=QString::fromLocal8Bit(pReply->readAll());;
-    QString viewState=getArgu("VIEWSTATE",html);
+    QString html=QString::fromLocal8Bit(pReply->readAll());
+    names<<html;
     delete pReply;
     QRegExp rx("(<input name=\"\\S*\")");
     rx.indexIn(html);
     int pos=rx.indexIn(html,0);
-    QString idNmae=rx.cap(1).replace("<input name=\"","").replace("\"","");
-    pos=rx.indexIn(html,pos+1);
-    QString passName=rx.cap(1).replace("<input name=\"","").replace("\"","");
+    for(int i=0;i<3;i++)
+    {
+        names<<rx.cap(1).replace("<input name=\"","").replace("\"","");
+        pos=rx.indexIn(html,pos+1);
+    }
+    return names;
+}
+
+bool Session::login1()
+{
+    QStringList names=getInputName("http://"+m_host+"/("+m_tagCode+")/default_ysdx.aspx");
+    QString html=names[0];
+    QString viewState=getArgu("VIEWSTATE",html);
+    QString idNmae=names[1];
+    QString passName=names[2];
 
     //    Login
+
     QString eventvalidation=getArgu("EVENTVALIDATION",html);
     QByteArray data=QString("__VIEWSTATE="+viewState+
                             "&__EVENTVALIDATION="+eventvalidation+"&"
@@ -210,9 +185,41 @@ Session::ErrorType Session::tryLogin()
     pReply=manager.post(request,data);
     loop.exec();
     html=QString::fromLocal8Bit( pReply->readAll().data());
-    if(html.contains(tr("用户名不存在")))        return NoUserError;
-    if(html.contains(tr("密码错误")))        return PasswordError;
-    if(!html.contains("aspx?xh"))	       return OtherError;
+    QRegExp rx;
+    rx.setPattern("(alert\\(\\'[\u4e00-\u9fa5]+)");
+    rx.indexIn(html.toUtf8());
+    m_error=rx.capturedTexts()[0].replace("alert('","");
+    if(html.contains("aspx?xh"))	       return true;
     delete pReply;
-    return NoError;
+    return false;
+}
+
+bool Session::login2()
+{
+
+    CheckCodeDlg dlg(NULL,this);
+    dlg.exec();
+    QStringList names=getInputName("http://"+m_host+"/("+m_tagCode+")/default2.aspx");
+    QString html=names[0];
+    QString idNmae=names[1];
+    QString passName=names[2];
+    QString codeName=names[3];
+
+    //    Login
+    QString eventvalidation=getArgu("EVENTVALIDATION",html);
+    QByteArray data=QString("__VIEWSTATE="+m_viewState+
+                            "&__EVENTVALIDATION="+eventvalidation+"&"
+                            +idNmae+"="+m_id+"&"+passName+"="+m_pass+"&"+codeName+"="+m_checkCode+"&RadioButtonList1=%D1%A7%C9%FA&Button1=").toLatin1();
+
+    pReply=manager.post(request,data);
+    loop.exec();
+    html=QString::fromLocal8Bit( pReply->readAll().data());
+    QRegExp rx;
+    rx.setPattern("(alert\\(\\'[\u4e00-\u9fa5]+)");
+    rx.indexIn(html.toUtf8());
+    m_error=rx.capturedTexts()[0].replace("alert('","");
+    QString redirect=pReply->attribute(QNetworkRequest::RedirectionTargetAttribute).toString();
+    if(redirect.contains("aspx?xh"))	       return true;
+    delete pReply;
+    return false;
 }

@@ -2,7 +2,7 @@
 #include <QApplication>
 #include <QTextCodec>
 #include <QCleanlooksStyle>
-
+#include <QDebug>
 
 int main(int argc, char *argv[])
 {

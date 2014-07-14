@@ -17,10 +17,11 @@ public:
     enum ErrorType{NoError,CheckCodeError,PasswordError,NoUserError,OtherError};
     explicit Session(QString m_host,QString m_id="",QString m_pass="");
     bool preLogin();
-    ErrorType createLogin();
-    ErrorType tryLogin();
+    bool login2();
+    bool login1();
     QPixmap* getCheckCode();
     QList<QStringList> query(QString years,QString term);
+    QString getError(){return m_error;}
 
 signals:
 
@@ -28,7 +29,7 @@ public slots:
     void setCheckCode(QString code);
 
 private:
-    QString m_host,m_id,m_pass,m_checkCode;
+    QString m_host,m_id,m_pass,m_checkCode,m_error;
     QNetworkAccessManager manager;
     QEventLoop loop;
     QNetworkRequest request;
@@ -40,6 +41,7 @@ private:
     QByteArray encodeURI(QString str);
     QString getName(QString html);
     QList<QStringList> getScore(QString html);
+    QStringList getInputName(QString url);
 
 
 };
