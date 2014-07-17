@@ -14,7 +14,6 @@ class Session : public QObject
     Q_OBJECT
 public:
 
-    enum ErrorType{NoError,CheckCodeError,PasswordError,NoUserError,OtherError};
     explicit Session(QString m_host,QString m_id="",QString m_pass="");
     bool preLogin();
     bool login2();

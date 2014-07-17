@@ -36,4 +36,4 @@ BEGIN
 END
 
 
-IDI_ICON1               ICON                    "ico.ico"
+IDI_ICON1               ICON                    "res/ico.ico"

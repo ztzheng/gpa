@@ -31,5 +31,6 @@ void CheckCodeDlg::on_btnSubmit_clicked()
 {
     emit finishedCode(ui->lineEdit->text());
     this->close();
+    accept();
 }
 

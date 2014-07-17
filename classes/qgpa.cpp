@@ -65,6 +65,11 @@ void QGpa::on_btnQuery_clicked()
     bool login=session.login1();
     if(login==false&&session.getError().isEmpty())
         login=session.login2();
+    if(session.getError()=="quit")
+    {
+        ui->btnQuery->setEnabled(true);
+        return;
+    }
     if(login!=true)
     {
         QMessageBox::critical(this,tr("错误"),tr(session.getError().toLatin1()));

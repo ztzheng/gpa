@@ -19,7 +19,7 @@
    <string>绩点助手</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../qgpa.qrc">
+   <iconset resource="../res/qgpa.qrc">
     <normaloff>:/ico.ico</normaloff>:/ico.ico</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
@@ -392,7 +392,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="../qgpa.qrc"/>
+  <include location="../res/qgpa.qrc"/>
  </resources>
  <connections>
   <connection>

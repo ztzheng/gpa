@@ -33,9 +33,10 @@ FORMS    += \
     ui/queryresult.ui
 
 RESOURCES += \
-    qgpa.qrc
+    res/qgpa.qrc
 
 RC_FILE += qgpa.rc
 
 OTHER_FILES += \
+    res/ico.ico \
     qgpa.rc

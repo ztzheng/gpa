@@ -198,7 +198,11 @@ bool Session::login2()
 {
 
     CheckCodeDlg dlg(NULL,this);
-    dlg.exec();
+    if(dlg.exec()!=QDialog::Accepted)
+    {
+        m_error="quit";
+        return false;
+    }
     QStringList names=getInputName("http://"+m_host+"/("+m_tagCode+")/default2.aspx");
     QString html=names[0];
     QString idNmae=names[1];
