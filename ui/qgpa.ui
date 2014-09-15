@@ -37,7 +37,7 @@
          </font>
         </property>
         <property name="text">
-         <string>&lt;html&gt;&lt;body&gt;&lt;p&gt;本软件由个人开发，欢迎二次开发，禁止用于商业用途！&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/ztzheng/gpa&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;软件源码&lt;/span&gt;&lt;/a&gt; &lt;a href=&quot;http://pan.baidu.com/s/1qWrx0U4#dir/path=/共享/绩点助手&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;查看更新&lt;/span&gt;&lt;/a&gt;    广东财经大学信息学院  &lt;a href=&quot;mailto:zhengzetong@tom.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;zhengzetong@tom.com&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;body&gt;&lt;p&gt;本软件由个人开发，欢迎二次开发，禁止用于商业用途！&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/ztzheng/gpa&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;软件源码&lt;/span&gt;&lt;/a&gt; &lt;a href=&quot;http://pan.baidu.com/s/1qWrx0U4&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;查看更新&lt;/span&gt;&lt;/a&gt;    广东财经大学信息学院  &lt;a href=&quot;mailto:zhengzetong@163.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;zhengzetong@163.com&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignHCenter|Qt::AlignTop</set>
