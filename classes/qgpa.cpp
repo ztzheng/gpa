@@ -77,12 +77,20 @@ void QGpa::on_btnQuery_clicked()
         return;
     }
 
-    // 查询成功
     QList<QStringList> list=session.query(ui->comboBox->currentText(),ui->comboBox_2->currentText());
+    if(list.length()<1)
+    {
+        QMessageBox::critical(this,tr("错误"),tr("无法查询到成绩"));
+        ui->btnQuery->setEnabled(true);
+
+        return;
+    }
+    // 查询成功
     QueryResult *result=new QueryResult(this,list,ui->comboBox->currentText(),ui->comboBox_2->currentText(),ui->editId->text());
     this->hide();
     result->show();
     ui->btnQuery->setEnabled(true);
+
 }
 
 void QGpa::openUrl(QString url)
